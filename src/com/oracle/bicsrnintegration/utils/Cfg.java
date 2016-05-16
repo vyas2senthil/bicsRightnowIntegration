@@ -1,4 +1,4 @@
-package com.oracle.bicsrnintegration;
+package com.oracle.bicsrnintegration.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,11 +70,11 @@ public class Cfg {
 	    return new Cfg(bicsService, bicsIdentityDomain, bicsDatacenter, bicsUser, bicsPassword,
 	    		rightNowUrl, rightNowUser, rightNowPassword, rightNowDelimiter, proxyServer, proxyPort, hourDifference, threads, tableFile);
 	    } catch (IOException e) {
-	    	Log.log(Module.PROPERTIES, "There was an error when trying to read properties file");
+	    	Log.error(Module.PROPERTIES, "There was an error when trying to read file");
 	    	e.printStackTrace();
 	    	System.exit(1);
 	    } catch (PropertyNotFoundException e) {
-	    	Log.log(Module.PROPERTIES, "A required property is missing from properties file");
+	    	Log.error(Module.PROPERTIES, "A required property is missing from file");
 			e.printStackTrace();
 	    	System.exit(1);
 		}
