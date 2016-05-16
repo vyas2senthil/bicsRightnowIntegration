@@ -21,10 +21,12 @@ public class Cfg {
 	private String proxyServer;
 	private int proxyPort;
 	private int hourDifference;
+	private int threads;
+	private String tableFile;
 	
 	private Cfg(String bicsService, String bicsIdentityDomain, String bicsDatacenter, String bicsUser,
 			String bicsPassword, String rightNowUrl, String rightNowUser, String rightNowPassword,
-			String rightNowDelimiter, String proxyServer, int proxyPort, int hourDifference) {
+			String rightNowDelimiter, String proxyServer, int proxyPort, int hourDifference, int threads, String tableFile) {
 		this.bicsService = bicsService;
 		this.bicsIdentityDomain = bicsIdentityDomain;
 		this.bicsDatacenter = bicsDatacenter;
@@ -37,6 +39,8 @@ public class Cfg {
 		this.proxyServer = proxyServer;
 		this.proxyPort = proxyPort;
 		this.hourDifference = hourDifference;
+		this.threads = threads;
+		this.tableFile = tableFile;
 	}
 	
 	public static Cfg fromPropertiesFile() {
@@ -58,11 +62,13 @@ public class Cfg {
 	    String proxyServer = properties.getRequiredStringProperty("proxyServer");
 	    int proxyPort = properties.getRequiredIntProperty("proxyPort");
 	    int hourDifference = properties.getRequiredIntProperty("hourDifference");
+	    int threads = properties.getRequiredIntProperty("threads");
+	    String tableFile = properties.getRequiredStringProperty("tableFile");
 	    
 	    if (proxyServer.equals("")) proxyServer = null;
 	    
 	    return new Cfg(bicsService, bicsIdentityDomain, bicsDatacenter, bicsUser, bicsPassword,
-	    		rightNowUrl, rightNowUser, rightNowPassword, rightNowDelimiter, proxyServer, proxyPort, hourDifference);
+	    		rightNowUrl, rightNowUser, rightNowPassword, rightNowDelimiter, proxyServer, proxyPort, hourDifference, threads, tableFile);
 	    } catch (IOException e) {
 	    	Log.log(Module.PROPERTIES, "There was an error when trying to read properties file");
 	    	e.printStackTrace();
@@ -114,5 +120,12 @@ public class Cfg {
 		return hourDifference;
 	}
 	
+	public int getThreads() {
+		return threads;
+	}
+	
+	public String getTableFile() {
+		return tableFile;
+	}
 	
 }

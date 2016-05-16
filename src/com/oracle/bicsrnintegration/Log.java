@@ -19,6 +19,9 @@ public class Log {
 		case BICS: moduleStr = "BICS"; break;
 		case RIGHTNOW: moduleStr = "RIGHTNOW"; break;
 		case PROPERTIES: moduleStr = "PROPERTIES"; break;
+		case TABLEREADER: moduleStr = "TABLEREADER"; break;
+		case INTEGRATOR: moduleStr = "INTEGRATOR"; break;
+		default: moduleStr = "UNKNOWN";
 		}
 		
 		System.out.println(getTimestamp() + " [" + moduleStr + "]: " + message);
