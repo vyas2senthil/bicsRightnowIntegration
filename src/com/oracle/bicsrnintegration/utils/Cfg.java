@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import org.oracle.property.Propertiies;
 import org.oracle.property.exceptions.PropertyNotFoundException;
+import org.oracle.property.exceptions.PropertyNotIntException;
 
 public class Cfg {
 	private String bicsService;
@@ -77,6 +78,10 @@ public class Cfg {
 	    	Log.error(Module.PROPERTIES, "A required property is missing from file");
 			e.printStackTrace();
 	    	System.exit(1);
+		} catch (PropertyNotIntException e) {
+			Log.error(Module.PROPERTIES, "A required property is not an integer");
+			e.printStackTrace();
+			System.exit(1);
 		}
 	    
 	    return null;
