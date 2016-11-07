@@ -19,6 +19,7 @@ import com.oracle.bicsrnintegration.utils.Log;
 import com.oracle.bicsrnintegration.utils.Module;
 import com.oracle.http.DefaultResponse;
 import com.oracle.rightnow.RightNowClient;
+import com.oracle.rightnow.RightNowResponse;
 
 public class Main {
 
@@ -70,7 +71,15 @@ public class Main {
 		
 		/* GETTING COUNT OF OBJECT FROM RIGHTNOW */
 		Log.info(Module.RIGHTNOW, "Getting record count from '" + tableDescription.getRightNowTableName() + "'...");
-			String recordCount = rn.execQuery("USE REPORT; SELECT COUNT(*) FROM " + tableDescription.getRightNowTableName(), 1).getResponse();
+		RightNowResponse rightNowResponse = rn.execQuery("USE REPORT; SELECT COUNT(*) FROM " + tableDescription.getRightNowTableName(), 1);
+		String recordCount = null;
+		if (rightNowResponse.isValid())
+			recordCount = rightNowResponse.getResponse();
+		else {
+			Log.error(Module.RIGHTNOW, rightNowResponse.getResponse());
+			System.exit(1);
+		}
+		
 		Log.info(Module.RIGHTNOW, "There are " + recordCount.split("\\r\\n")[1] + " records in the table");
 		
 		/* GETTING MIN(ID) AND MAX(ID) FROM RIGHTNOW */
@@ -111,9 +120,10 @@ public class Main {
 		dr = cacheApi.deleteDataCachedForAllTablesOnAllDatabases();
 		if (dr.getCode() == 200)
 			Log.info(Module.BICS, "Cache was deleted!");
-		else
+		else {
 			Log.error(Module.BICS, "Error happened when trying to delete this cache (" + dr.getCode() + ").");
-		
+			System.exit(1);
+		}
 		
 
 	}
